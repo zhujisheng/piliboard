@@ -1,3 +1,4 @@
+from SimpleDevice import SwitchLight
 from WebConfig import WebConfig
 from Config import Config
 from StateMQTTClient import StateMQTTClient
@@ -8,48 +9,37 @@ import utime
 import micropython
 import sys
 
+ap_if = network.WLAN(network.AP_IF)
+sta_if = network.WLAN(network.STA_IF)
 
-LED = machine.PWM(machine.Pin(5),freq=500)
-
-CLIENT_ID = hexlify(machine.unique_id()).decode()
-DEVICE_NAME = 'pilight_' + CLIENT_ID
+LIGHT_PIN = 5
+DEVICE_NAME = 'pilight_switch_' + hexlify(ap_if.config("mac")[-3:]).decode()
 
 CONFIG_DATA_SCHEMA = """
 {"name": "%s",
 "command_topic": "%s",
 "state_topic": "%s",
-"availability_topic": "%s",
-"brightness_command_topic": "%s",
-"brightness_state_topic": "%s",
-"brightness_scale": 100}
+"availability_topic": "%s"}
 """
 
 BASE_TOPIC = 'piliboard/' + DEVICE_NAME
 AVAILABILITY_TOPIC = BASE_TOPIC + "/availability"
 COMMAND_TOPIC = BASE_TOPIC + "/command"
 STATE_TOPIC = BASE_TOPIC + "/state"
-BRIGHTNESS_COMMAND_TOPIC = BASE_TOPIC + "/brightness/command"
-BRIGHTNESS_STATE_TOPIC = BASE_TOPIC + "/brightness/state"
 
 CONFIG_TOPIC = 'homeassistant/light/piliboard/' + DEVICE_NAME + '/config'
 CONFIG_DATA = CONFIG_DATA_SCHEMA % (DEVICE_NAME,
                                     COMMAND_TOPIC,
                                     STATE_TOPIC,
                                     AVAILABILITY_TOPIC,
-                                    BRIGHTNESS_COMMAND_TOPIC,
-                                    BRIGHTNESS_STATE_TOPIC,
                                     )
-
-
-ap_if = network.WLAN(network.AP_IF)
-sta_if = network.WLAN(network.STA_IF)
 
 MqttClient = None
 mqtt_conf = Config()
-webconfig = WebConfig(mqtt_conf=mqtt_conf, change_main=False,device_name=DEVICE_NAME)
 
-brightness = 100
-is_on = False
+webconfig = WebConfig(mqtt_conf=mqtt_conf, main_module=None, device_name=DEVICE_NAME)
+
+pilight = SwitchLight( led_num=LIGHT_PIN )
 
 
 def mqtt_start():
@@ -57,11 +47,9 @@ def mqtt_start():
     if MqttClient.connected:
         print("mqtt connected: subto {b}".format(b=COMMAND_TOPIC))
         MqttClient.subscribe(COMMAND_TOPIC)
-        MqttClient.subscribe(BRIGHTNESS_COMMAND_TOPIC)
         MqttClient.publish( CONFIG_TOPIC, CONFIG_DATA.encode(), retain=True)
         MqttClient.publish( AVAILABILITY_TOPIC, b"online", retain=True)
-        MqttClient.publish( STATE_TOPIC, b"ON" if is_on else b"OFF", retain=True )
-        MqttClient.publish( BRIGHTNESS_STATE_TOPIC, str(brightness).encode(), retain=True )
+        MqttClient.publish( STATE_TOPIC, pilight._state.encode(), retain=True )
         return True
     else:
         print("Can't connect to MQTT Broker")
@@ -69,7 +57,6 @@ def mqtt_start():
 
 
 def mqtt_cb(topic, msg):
-    global brightness, is_on
     print((topic, msg))
 
     if webconfig.started:
@@ -77,37 +64,17 @@ def mqtt_cb(topic, msg):
 
     if topic==COMMAND_TOPIC.encode():
         if msg == b"ON":
-            is_on = True
-            LED.duty(int(brightness/100*1024))
-            MqttClient.publish( STATE_TOPIC, msg, retain=True )
+            pilight.turn_on()
         elif msg == b"OFF":
-            is_on = False
-            LED.duty(0)
-            MqttClient.publish( STATE_TOPIC, msg, retain=True )
-
-    elif topic==BRIGHTNESS_COMMAND_TOPIC.encode():
-        try:
-            brightness=int(msg.decode())
-        except:
-            return
-        if brightness < 0:
-            brightness = 0
-        elif brightness > 100:
-            brightness = 100
-
-        is_on = True
-        LED.duty(int(brightness/100*1024))
-        MqttClient.publish( BRIGHTNESS_STATE_TOPIC, str(brightness).encode(), retain = True )
+            pilight.turn_off()
+        MqttClient.publish( STATE_TOPIC, pilight._state.encode(), retain=True )
 
 
 def mqtt_init(conf):
     global MqttClient
 
-    if conf == None:
-        MqttClient = StateMQTTClient(CLIENT_ID, None)
-        return False
-    if not('mqtt_ip' in conf):
-        MqttClient = StateMQTTClient(CLIENT_ID, None)
+    if (conf == None) or not('mqtt_ip' in conf):
+        MqttClient = StateMQTTClient(DEVICE_NAME, None)
         return False
 
     port=1883
@@ -116,7 +83,7 @@ def mqtt_init(conf):
     except:
         print("MQTT Input port error, let it be 1883, and continue...")
         
-    MqttClient = StateMQTTClient(CLIENT_ID, conf.get("mqtt_ip"), port=port, user=conf.get("mqtt_user"), password=conf.get("mqtt_password"), keepalive=60)
+    MqttClient = StateMQTTClient(DEVICE_NAME, conf.get("mqtt_ip"), port=port, user=conf.get("mqtt_user"), password=conf.get("mqtt_password"), keepalive=60)
     MqttClient.set_callback(mqtt_cb)
     MqttClient.set_last_will( AVAILABILITY_TOPIC, b"offline", retain=True)
 
@@ -130,9 +97,11 @@ def start():
 
     ap_if.active(False)
     sta_if.active(True)
-    mqtt_init(mqtt_conf.content)
-    utime.sleep(5)
-    mqtt_start()
+    if mqtt_init(mqtt_conf.content):
+        utime.sleep(5)
+        mqtt_start()
+    else:
+        print("mqtt_init failed")
 
 
 #    try:

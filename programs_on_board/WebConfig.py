@@ -15,9 +15,7 @@ ap_if = network.WLAN(network.AP_IF)
 
 
 class WebConfig:
-    def __init__(self, mqtt_conf, change_main=False, main_module=None, device_name='unknown'):
-        self._change_main = change_main
-        self._main_module = main_module
+    def __init__(self, mqtt_conf, main_module=None, device_name='unknown'):
         self._device_name = device_name
         self._mqtt_conf = mqtt_conf
 
@@ -32,6 +30,12 @@ class WebConfig:
                          ]
         self._HttpServer = MiniWebSrv(routeHandlers=routeHandlers)
         self._data_changed=False
+
+        if main_module:
+            content = "import %s\n%s.start()\n"%(main_module,main_module)
+            f = open('/main.py', 'w')
+            f.write(content)
+            f.close()
 
     def start(self):
         if not self._HttpServer._started:
@@ -122,12 +126,6 @@ class WebConfig:
     def _http_reboot(self, c_socket, request_data):
         c = {}
 
-        if self._change_main:
-            content = "import %s\n%s.start()\n"%(self._main_module,self._main_module)
-            f = open('/main.py', 'w')
-            f.write(content)
-            f.close()
-
         c['working']=False
         c['state_info']= [{'当前状态':'重启……'}]
 
@@ -201,17 +199,15 @@ class WebConfig:
 
 
 
-def start():
+def start(pin_no, led_pin_no, main_module, device_name):
     from IrqLongpressReset import IrqLongpressReset
     from ubinascii import hexlify
     from Config import Config
 
-    irq = IrqLongpressReset()
-    device_name = 'pili_apa102_' + hexlify(machine.unique_id()).decode()
-    main_module="pili_apa102"
+    irq = IrqLongpressReset(pin_no=pin_no, led_pin_no=led_pin_no,main_module=main_module, device_name=device_name)
     mqtt_conf = Config()
 
-    webconfig = WebConfig(mqtt_conf=mqtt_conf, change_main=True, main_module=main_module, device_name=device_name)
+    webconfig = WebConfig(mqtt_conf=mqtt_conf, main_module=main_module, device_name=device_name)
 
     utime.sleep(10)
     webconfig.start()
