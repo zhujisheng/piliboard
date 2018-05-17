@@ -2,13 +2,13 @@
 
 
 ## 写入固件
-1.将开发板上模式开关置于“write flash”状态
-2.按开发板上reset按钮重启piliboard
-3.在pc上运行命令：`esptool.py --port COMx erase_flash`，擦除flash中内容
-4.按开发板上reset按钮重启piliboard
-5.在pc上运行命令：`esptool.py --port COMx --baud 115200 write_flash 0 firmware-on-pili.bin`，写入固件
-6.将开发板上模式开关置于“run”状态
-7.按开发板上reset按钮重启piliboard
+1. 将开发板上模式开关置于“write flash”状态
+2. 按开发板上reset按钮重启piliboard
+3. 在pc上运行命令：`esptool.py --port COMx erase_flash`，擦除flash中内容
+4. 按开发板上reset按钮重启piliboard
+5. 在pc上运行命令：`esptool.py --port COMx --baud 115200 write_flash 0 firmware-on-pili.bin`，写入固件
+6. 将开发板上模式开关置于“run”状态
+7. 按开发板上reset按钮重启piliboard
 
 注：
 - 命令`COMx`为连接的串口，在Windows下可以使用`mode`命令查看，在linux下形式为`/dev/ttyUSB0`
