@@ -1,9 +1,9 @@
 [TOC]
 
-**
-本文中所有命令，假定安装的mqtt服务器在`10.0.1.105`上提供服务，端口号采用默认的`1883`，用户名为`pi`，密码为`hachina`。<br>
-在运行以下的命令时，请根据您环境的实际情况，修改以上的值。
-**
+**本文中所有命令，假定安装的mqtt服务器在`10.0.1.105`上提供服务，端口号采用默认的`1883`，用户名为`pi`，密码为`hachina`。<br>
+在运行以下的命令时，请根据您环境的实际情况，修改以上的值。**
+
+**大家按照以下步骤一步步（step by step）实践，同时观察源代码中的注释部分（针对每一步增加的逻辑进行了解释）。**
 
 ## MQTT基础知识
 ### 基础概念
@@ -73,10 +73,9 @@ http://mqttfx.jensd.de/index.php/download
 将以下的命令中，`10.0.1.105`替换为您的MQTT服务器，`pi`替换为您MQTT服务上的用户名，`hachina`替换为您的密码。<br>
 `import mqtt_stepbystep.dht11 as dht11`<br>
 `dht11.main(mqtt_broker='10.0.1.105',mqtt_port=1883,mqtt_user="pi",mqtt_password="hachina")`<br>
-*
-注：如果您没有搭建自己的mqtt服务器，此处可以连接`test.mosquitto.org`：<br>
-`dht11.main(mqtt_broker='test.mosquitto.org')`
-*
+
+*注：如果您没有搭建自己的mqtt服务器，此处可以连接`test.mosquitto.org`：<br>
+`dht11.main(mqtt_broker='test.mosquitto.org')`*
 ### homeassistant中温湿度传感器的配置
 ```yaml
 # MQTT服务器信息配置
