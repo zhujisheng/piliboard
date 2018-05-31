@@ -1,4 +1,10 @@
 [TOC]
+## 简介
+本文档主要介绍Piliboard的基础操作。
+在熟悉了基本操作之后，可以进一步深入：
+[样例程序](examples/)
+[深入MQTT](mqtt_stepbystep/)
+
 ## 开发板图示
 
 ## 连接开发板
@@ -58,6 +64,7 @@ Piliboard的环境中构建了两块逻辑网卡：工作站网卡和AP网卡，
 
 ### 工作站网卡配置
 首先设置变量`sta_if`为工作站网卡，再进行后续命令。
+
 `sta_if = network.WLAN(network.STA_IF)`
 #### 连接热点
 配置网卡，连接到热点xxxx，密码yyyy
@@ -66,11 +73,16 @@ sta_if.active(True)
 sta_if.connect('xxxx','yyyy')
 ```
 #### 查询状态命令
-网卡是否激活：
+- 网卡是否激活：
+
 `sta_if.active()`
-连接是否成功：
+
+- 连接是否成功：
+
 `sta_if.isconnected()`
-被分配的IP地址设置：
+
+- 被分配的IP地址设置：
+
 `sta_if.ifconfig()`
 
 #### 关闭网卡
@@ -86,22 +98,31 @@ ap_if.active(True)
 ap_if.config(essid="abcd", password="12345678")
 ```
 
-#### 查询状态命令
-网卡是否激活：
+#### 网卡相关命令
+- 网卡是否激活：
+
 `ap_if.active()`
-网卡的IP地址：
+
+- 网卡的IP地址：
+
 `ap_if.ifconfig()`
-AP网卡的热点名：
+
+- AP网卡的热点名：
+
 `ap_if.config("essid")`
 
-关闭AP网卡：
+- 关闭AP网卡：
+
 `ap_if.active(False)`
 
 ### 配置WebREPL
 可以输入以下命令，进行WebREPL的设置
+
 `import webrepl_setup`
+
 ![webrepl_setup](images/webrepl_setup.PNG)
-跟着提示进行相应的输入与配置。
+
+如上图，跟着提示进行相应的输入与配置。
 
 ## 文件操作
 ### 文件操作命令
@@ -137,6 +158,7 @@ f.close()
 
 ### WebREPL中文件上传与下载
 ![webrepl文件操作](images/webrepl_file.PNG)
+
 *注：第二次上传上次上传的文件，需要重新选择文件，否则会上传浏览器缓存的文件。*
 ## GPIO口
 ### GPIO输出（控制LED灯）
@@ -145,13 +167,17 @@ Piliboard开发板上有一盏连接GPIO 5号口的LED灯，可以用下面命�
 import machine
 p5 = machine.Pin(5,machine.Pin.OUT)
 ```
-开启：
+
+- 开启：
+
 `p5.value(1)`
 
-关闭：
+- 关闭：
+
 `p5.value(0)`
 
-查看当前状态：
+- 查看当前状态：
+
 `p5.value()`
 
 ### PWM调制（控制LED灯亮度）
@@ -236,3 +262,4 @@ http://docs.micropython.org/en/latest/esp8266/library/index.html
 - 命令`COMx`为连接的串口，在Windows下可以使用`mode`命令查看，在linux下形式为`/dev/ttyUSB0`
 - esptool工具通过`pip3 install esptool`命令安装
 - 固件下载地址：https://github.com/zhujisheng/piliboard/raw/master/firmware-on-pili.bin
+
