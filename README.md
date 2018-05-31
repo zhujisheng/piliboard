@@ -2,7 +2,7 @@
 ## 简介
 本文档主要介绍Piliboard的基础操作。<br>
 在熟悉了基本操作之后，可以进一步深入：<br>
-[样例程序](examples/)
+[样例程序](examples/)<br>
 [深入MQTT](mqtt_stepbystep/)
 
 ## 开发板图示
@@ -72,23 +72,20 @@ sta_if.active(True)
 sta_if.connect('xxxx','yyyy')
 ```
 #### 查询状态命令
-- 网卡是否激活：
-
+- 网卡是否激活：<br>
 `sta_if.active()`
 
-- 连接是否成功：
-
+- 连接是否成功：<br>
 `sta_if.isconnected()`
 
-- 被分配的IP地址设置：
-
+- 被分配的IP地址与设置：<br>
 `sta_if.ifconfig()`
 
 #### 关闭网卡
 `sta_if.active(False)`
 
 ### AP网卡配置
-首先设置变量`ap_if`为工作站网卡，再进行后续命令。
+首先设置变量`ap_if`为工作站网卡，再进行后续命令。<br>
 `ap_if = network.WLAN(network.AP_IF)`
 #### 配置热点
 配置热点abcd，密码12345678
@@ -98,25 +95,20 @@ ap_if.config(essid="abcd", password="12345678")
 ```
 
 #### 网卡相关命令
-- 网卡是否激活：
-
+- 网卡是否激活：<br>
 `ap_if.active()`
 
-- 网卡的IP地址：
-
+- 网卡的IP地址：<br>
 `ap_if.ifconfig()`
 
-- AP网卡的热点名：
-
+- AP网卡的热点名：<br>
 `ap_if.config("essid")`
 
-- 关闭AP网卡：
-
+- 关闭AP网卡：<br>
 `ap_if.active(False)`
 
 ### 配置WebREPL
-可以输入以下命令，进行WebREPL的设置
-
+可以输入以下命令，进行WebREPL的设置<br>
 `import webrepl_setup`
 
 ![webrepl_setup](images/webrepl_setup.PNG)
@@ -167,16 +159,13 @@ import machine
 p5 = machine.Pin(5,machine.Pin.OUT)
 ```
 
-- 开启：
-
+- 开启：<br>
 `p5.value(1)`
 
-- 关闭：
-
+- 关闭：<br>
 `p5.value(0)`
 
-- 查看当前状态：
-
+- 查看当前状态：<br>
 `p5.value()`
 
 ### PWM调制（控制LED灯亮度）
