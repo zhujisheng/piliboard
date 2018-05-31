@@ -1,7 +1,7 @@
 [TOC]
 ## 简介
-本文档主要介绍Piliboard的基础操作。
-在熟悉了基本操作之后，可以进一步深入：
+本文档主要介绍Piliboard的基础操作。<br>
+在熟悉了基本操作之后，可以进一步深入：<br>
 [样例程序](examples/)
 [深入MQTT](mqtt_stepbystep/)
 
@@ -63,8 +63,7 @@ Piliboard的环境中构建了两块逻辑网卡：工作站网卡和AP网卡，
 `import network`
 
 ### 工作站网卡配置
-首先设置变量`sta_if`为工作站网卡，再进行后续命令。
-
+首先设置变量`sta_if`为工作站网卡，再进行后续命令。<BR/>
 `sta_if = network.WLAN(network.STA_IF)`
 #### 连接热点
 配置网卡，连接到热点xxxx，密码yyyy
