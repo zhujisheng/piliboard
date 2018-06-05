@@ -3,8 +3,8 @@ def do_connect(essid, password):
     wlan = network.WLAN(network.STA_IF)
     wlan.active(True)
     if not wlan.isconnected():
-        print('connecting to network...')
+        print('连接WIFI...')
         wlan.connect(essid, password)
         while not wlan.isconnected():
             pass
-    print('network config:', wlan.ifconfig())
+    print('网络配置信息：', wlan.ifconfig())
