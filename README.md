@@ -1,6 +1,6 @@
 [TOC]
 ## 简介
-本文档主要介绍Piliboard的基础操作。<br>
+本文档主要介绍PiliBoard的基础操作。<br>
 在熟悉了基本操作之后，可以进一步深入：<br>
 [样例程序](examples/)<br>
 [深入MQTT](mqtt_stepbystep/)
@@ -10,13 +10,13 @@
 ## 连接开发板
 连接开发板，就是进入开发板的REPL环境，即一个符合python语法的交互式命令环境。
 ![REPL](images/REPL.PNG)
-有两种方法可以建立与Piliboard的连接，进入REPL环境。
+有两种方法可以建立与PiliBoard的连接，进入REPL环境。
 - WIFI+WebREPL
 - 串口+REPL
 
 ### WIFI+WebREPL
 1. 建立WIFI连接
-	- Piliboard通电后，工作站电脑连接Piliboard的WIFI AP。
+	- PiliBoard通电后，工作站电脑连接PiliBoard的WIFI AP。
 	- 名称为`MicroPython-xxxxxx`，密码为`micropythoN`（注意最后一个`N`为大写）
 		![网络AP连接](images/wifi_ap.PNG)
 2. WebREPL
@@ -54,9 +54,9 @@ http://www.wch.cn/download/CH341SER_MAC_ZIP.html
 - 退出：`ctrl+a` `/`
 
 ## 网络操作
-Piliboard的环境中构建了两块逻辑网卡：工作站网卡和AP网卡，各自独立工作。
-- 工作站网卡用于连接到无线路由器（此时piliboard类似于一台计算机或手机）
-- AP网卡让其它WIFI设备将piliboard作为热点连接（此时piliboard类似于一个无线路由器）
+PiliBoard的环境中构建了两块逻辑网卡：工作站网卡和AP网卡，各自独立工作。
+- 工作站网卡用于连接到无线路由器（此时PiliBoard类似于一台计算机或手机）
+- AP网卡让其它WIFI设备将PiliBoard作为热点连接（此时PiliBoard类似于一个无线路由器）
 *注：在esp8266上，网络配置后即时生效，重启后不会丢失。*
 
 在配置网络前，运行以下命令，引入对应的网络库：
@@ -182,7 +182,7 @@ pwm5 = PWM(Pin(5), freq=500, duty=512) # 在一条命令中创建并设置相关
 ```
 
 ### GPIO输入
-Piliboard开发板上有一个按钮开关连接GPIO4号口，在非按下状态为高电平，按下后为低电平。
+PiliBoard开发板上有一个按钮开关连接GPIO4号口，在非按下状态为高电平，按下后为低电平。
 以下程序每秒检测输入值，并打印出结果：
 ```python
 import machine
@@ -201,7 +201,7 @@ while True:
 - 需要先`ctrl+e`进入黏贴模式，然后copy+paste，然后`ctrl+d`退出黏贴模式运行。
 - 或者直接手工一行行输入或黏贴，此时缩进会自动出现。
 - `ctrl+c`终止程序运行。
-- 也可以将以上内容存为一个文件，例如`gpio_input.py`，上传到piliboard之后，执行`import gpio_input`执行此文件
+- 也可以将以上内容存为一个文件，例如`gpio_input.py`，上传到PiliBoard之后，执行`import gpio_input`执行此文件
 
 ### 温湿度传感器
 将dht11温湿度传感器，连接到GPIO2号口。
@@ -239,12 +239,12 @@ http://docs.micropython.org/en/latest/esp8266/library/index.html
 
 ### 固件写入
 1. 将开发板上模式开关置于“write flash”状态
-2. 按开发板上reset按钮重启piliboard
+2. 按开发板上reset按钮重启PiliBoard
 3. 在pc上运行命令：`esptool.py --port COMx erase_flash`，擦除flash中内容
-4. 按开发板上reset按钮重启piliboard
+4. 按开发板上reset按钮重启PiliBoard
 5. 在pc上运行命令：`esptool.py --port COMx --baud 115200 write_flash 0 firmware-on-pili.bin`，写入固件
 6. 将开发板上模式开关置于“run”状态
-7. 按开发板上reset按钮重启piliboard
+7. 按开发板上reset按钮重启PiliBoard
 
 注：
 - 命令`COMx`为连接的串口，在Windows下可以使用`mode`命令查看，在linux下形式为`/dev/ttyUSB0`
