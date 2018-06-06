@@ -3,6 +3,8 @@
 程序：[pwm_servo.py](pwm_servo.py)
 
 操作：
+- 硬件连接<br>
+接通电机的电源，控制线接GPIO2上
 - 执行以下命令<br>
 `import examples.pwm_servo as pwm_servo`<br>
 `pwm_servo.turn(90)`<br>
