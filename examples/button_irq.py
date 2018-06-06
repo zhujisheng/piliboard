@@ -19,4 +19,3 @@ def callback2(p):
         print("button released")
 
 button.irq(trigger=Pin.IRQ_FALLING, handler=callback1)
-

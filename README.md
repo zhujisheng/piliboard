@@ -73,19 +73,19 @@ sta_if.connect('xxxx','yyyy')
 ```
 #### 查询状态命令
 - 网卡是否激活：<br>
-`sta_if.active()`
+`sta_if.active()`<br>
 
 - 连接是否成功：<br>
-`sta_if.isconnected()`
+`sta_if.isconnected()`<br>
 
 - 被分配的IP地址与设置：<br>
-`sta_if.ifconfig()`
+`sta_if.ifconfig()`<br>
 
 #### 关闭网卡
 `sta_if.active(False)`
 
 ### AP网卡配置
-首先设置变量`ap_if`为工作站网卡，再进行后续命令。<br>
+首先设置变量`ap_if`为AP网卡，再进行后续命令。<br>
 `ap_if = network.WLAN(network.AP_IF)`
 #### 配置热点
 配置热点abcd，密码12345678
@@ -250,4 +250,3 @@ http://docs.micropython.org/en/latest/esp8266/library/index.html
 - 命令`COMx`为连接的串口，在Windows下可以使用`mode`命令查看，在linux下形式为`/dev/ttyUSB0`
 - esptool工具通过`pip3 install esptool`命令安装
 - 固件下载地址：https://github.com/zhujisheng/piliboard/raw/master/firmware-on-pili.bin
-
