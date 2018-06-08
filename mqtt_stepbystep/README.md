@@ -219,7 +219,7 @@ mqtt:
 
 ### homeassistant中的配置
 采用自动发现机制，配置与上一例中完全一样。<br>
-![mqtt_pwm](images/mqtt_pwm.PNG)
+![mqtt_pwm](../images/mqtt_pwm.PNG)
 
 ## 更稳定的mqtt客户端
 引入umqtt.robust库，基于umqtt.simple上的更稳定的mqtt客户端库。接口与umqtt.simple完全一致。<br>
