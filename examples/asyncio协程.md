@@ -1,4 +1,4 @@
-PYTHON异步携程演示程序
+PYTHON异步协程演示程序
 
 程序：[asyncio_program.py](asyncio_program.py)
 
