@@ -7,10 +7,11 @@
 
 ## MQTT基础知识
 ### 基础概念
-https://www.hachina.io/docs/3926.html
-
+https://www.hachina.io/docs/7125.html
+### 应用逻辑
+https://www.hachina.io/docs/7168.html
 ### 进阶概念
-https://www.hachina.io/docs/4431.html
+https://www.hachina.io/docs/7175.html
 
 ## MQTT软件安装
 ### 准备MQTT服务器
@@ -67,7 +68,8 @@ http://mqttfx.jensd.de/index.php/download
 
 ## 传感器
 实现一个MQTT温湿度传感器，每10秒上报一次信息。<br>
-代码：[dht11.py](dht11.py)
+代码：[dht11.py](dht11.py)<br>
+(代码中温度传感器连接于GPIO2号口)
 
 ### 运行
 将以下的命令中，`10.0.1.105`替换为您的MQTT服务器，`pi`替换为您MQTT服务上的用户名，`hachina`替换为您的密码。<br>

@@ -221,12 +221,12 @@ http://docs.micropython.org/en/latest/esp8266/esp8266/tutorial/index.html
 ### MicroPython库介绍
 http://docs.micropython.org/en/latest/esp8266/library/index.html
 ### Piliboard固件中其它内置库
-- `Config.py`（json格式配置文件读写、配置内容）
-- `ControlApa102.py`(apa102灯带控制程序)
-- `IrqLongpressReset.py`(通过按钮调用中断程序)
-- `MiniWebSrv.py`（一个小型的Web服务器）
-- `SimpleDevice.py`(简单的开关与pwm调值设备)
-- `StateMQTTClient.py`（一个基于`umqtt.simple`的mqtt库）
+- `Config`（json格式配置文件读写、配置内容）
+- `LedStrip`(apa102灯带控制程序)
+- `IrqLongpressReset`(通过按钮调用中断程序)
+- `MiniWebSrv`（一个小型的Web服务器）
+- `SimpleDevice`(简单的开关与pwm调值设备)
+- `StateMQTTClient`（一个基于`umqtt.simple`的mqtt库）
 
 ### Piliboard开发板固件初始化状态
 - 网络
