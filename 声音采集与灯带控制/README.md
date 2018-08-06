@@ -35,6 +35,16 @@ sudo pip3 install pyqtgraph
 树莓派并不自带声音输入设备，需要连接USB麦克风。连接后，运行以下命令，观察对应的声音输入设备(采样率)：
 `python3 list_audio_device.py`
 
+## MacOS基础准备
+### 基础安装
+运行以下命令，安装需要的库：
+```
+brew install portaudio
+pip3 install numpy scipy pyaudio pyqt5 pyqtgraph
+```
+注：如果`brew`没有安装，请先安装`brew`：
+`/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
+
 
 ## audio-reactive-led-strip
 本程序来自https://github.com/scottlawsonbc/audio-reactive-led-strip
